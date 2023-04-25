@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+	<meta charset="utf-8">
+	<title>Liste des Etudiants</title>
+</head>
+<divbody>
+	<div th:replace="template">
+	</div>
+	<div class="container mt-5">
+		<div class="card">
+			<div class="card-header">
+				Liste des Etudiants
+			</div>
+			<div class="card-body">
+
+				<table class="table table-striped">
+					<tr>
+						<th>ID Etudiant</th>
+						<th>Nom</th>
+						<th>Prenom</th>
+						<th>Parcours</th>
+						<th>Email</th>
+						<th>Date Inscription</th>
+						<th>Suppression</th>
+						<th>Edition</th>
+					</tr>
+					<tr th:each="e:${etudiants.content}">
+						<td th:text="${e.idEtudiant}"></td>
+						<td th:text="${e.nom}"></td>
+						<td th:text="${e.prenom}"></td>
+						<td th:text="${e.parcours}"></td>
+						<td th:text="${e.email}"></td>
+						<td th:text="${e.dateInscription}"></td>
+						<td><a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')"
+								th:href="@{supprimerEtudiant(id=${e.idEtudiant},page=${currentPage},size=${size})}">Supprimer</a>
+						</td>
+						<td><a class="btn btn-success" th:href="@{modifierEtudiant(id=${e.idEtudiant})}">Editer</a></td>
+					</tr>
+				</table>
+				<ul class="nav nav-pills">
+					<li th:each="page,status:${pages}">
+						<a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+							th:href="@{ ListeEtudiants(page=${status.index}, size=${size} ) }"
+							th:text="${status.index }"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</divbody>
+
+</html>
